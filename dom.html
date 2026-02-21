@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>add and remove</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    button {
+      border: none;
+      background-color: inherit;
+    }
+
+    :root {
+      --prime-bg-coloe: hsl(0, 0%, 80%);
+      --prime-fg-color: hsl(0, 0%, 60%);
+      --border-color: hsl(0, 0%, 60%);
+      --font-size: large;
+      font-family: sans-serif;
+      font-size: larger;
+      background-color: var(--prime-bg-coloe);
+      color: var(--prime-fg-color);
+
+    }
+
+    body,
+    html {
+      inline-size: 100vw;
+      scrollbar-width: none;
+    }
+
+    svg {
+      aspect-ratio: 1;
+      block-size: 100%;
+      fill: var(--prime-fg-color);
+
+    }
+
+    body {
+      min-block-size: 100vh;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+    }
+
+    main {
+      background-color: inherit;
+    }
+
+    section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1ch;
+
+    }
+
+    section output {
+      inline-size: 20vw;
+      block-size: 10vw;
+      background-color: hsl(0, 0%, 70%);
+      border-radius: 1vw;
+      min-block-size: 4rem;
+      min-inline-size: 6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 400%;
+      font-weight: 700;
+
+    }
+
+    section .active {
+      color: aquamarine;
+    }
+
+    section button {
+      aspect-ratio: 1;
+      block-size: 10vw;
+      border: 1.5px solid var(--border-color);
+      border-radius: 1vw;
+      min-block-size: 4rem;
+      min-inline-size: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &:active {
+        opacity: 0.5;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section>
+      <button class="btn" onclick="incrimentScore()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+          <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+        </svg>
+
+      </button>
+      <button class="btn" onclick="decrimentScore()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+          <path d="M200-440v-80h560v80H200Z" />
+        </svg>
+      </button>
+      <output class="output" id="output"></output>
+
+      <button class="btn" onclick="saveScore()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+          <path
+            d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z" />
+        </svg>
+      </button>
+      <button class="btn" onclick="loadScore()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+          <path
+            d="M204-318q-22-38-33-78t-11-82q0-134 93-228t227-94h7l-64-64 56-56 160 160-160 160-56-56 64-64h-7q-100 0-170 70.5T240-478q0 26 6 51t18 49l-60 60ZM481-40 321-200l160-160 56 56-64 64h7q100 0 170-70.5T720-482q0-26-6-51t-18-49l60-60q22 38 33 78t11 82q0 134-93 228t-227 94h-7l64 64-56 56Z" />
+        </svg></button>
+    </section>
+  </main>
+  <script>
+    let score = 0;
+
+    function addClass() {
+      if (score === 0) {
+        document.getElementById('output').classList.add('active');
+      } else {
+        document.getElementById('output').classList.remove('active');
+      }
+
+    }
+    function displayScore() {
+      document.getElementById('output').innerHTML = score;
+      addClass();
+    }
+
+    function incrimentScore() {
+      score++;
+      displayScore();
+    }
+
+    function saveScore() {
+      localStorage.setItem('data', JSON.stringify(score));
+    }
+
+    function loadScore() {
+      let loadData = localStorage.getItem('data');
+      if (loadData === "null") {
+        return;
+      }
+      score = JSON.parse(loadData);
+      displayScore();
+    }
+
+
+    function decrimentScore() {
+      score--;
+      displayScore();
+    }
+
+    addClass();
+    displayScore();
+
+
+  </script>
+
+</body>
+
+</html>
